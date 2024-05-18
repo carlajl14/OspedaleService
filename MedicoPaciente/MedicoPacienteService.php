@@ -1,7 +1,7 @@
 <?php
 
-require_once ('db/db.php');
-require_once ('models/MedicoPacienteModel.php');
+require_once ('./db/db.php');
+require_once ('./models/MedicoPaciente/MedicoPacienteModel.php');
 
 $medicoPaciente = new MedicoPacienteModel();
 @header("Content-type: application/json");

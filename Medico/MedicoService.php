@@ -1,18 +1,20 @@
 <?php
 
-require_once ('db/db.php');
-require_once ('models/MedicamentoModel.php');
+require_once ('./db/db.php');
+require_once ('./models/Medico/MedicoModel.php');
 
-$medicamento = new MedicamentoModel();
+$medico = new MedicoModel();
 @header("Content-type: application/json");
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['nombre'])) {
-        $res = $medicamento->getMedicine($_GET['nombre']);
+    if (isset($_GET['id'])) {
+        $res = $medico->getDoctorappointment($_GET['id']);
         echo json_encode($res);
         exit();
     } else {
+        //$res = $medicoPaciente->allPacientes();
+        //echo json_encode($res);
         exit();
     }
 }
@@ -22,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // se cargan toda la entrada que venga en php://input
     $post = json_decode(file_get_contents('php://input'), true);
-    $res = $medicamento->insertMedicine($post);
+    $res = $medico->RecordDoctor($post);
     $resul['resultado'] = $res;
     echo json_encode($resul);
     exit();
