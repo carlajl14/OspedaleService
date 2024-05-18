@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit();
     } else {
         //$res = $pasaje->getPasajes();
-        echo json_encode($res);
+        //echo json_encode($res);
         exit();
     }
 }
