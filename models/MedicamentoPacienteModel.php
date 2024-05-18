@@ -34,4 +34,25 @@ class MedicamentoPacienteModel extends Basedatos {
             return 'Error al devolver el medicamento.<br>'. $e->getMessage();
         }
     }
+    
+    /**
+     * New medicine for a patient
+     * @param type $post
+     * @return string
+     */
+    public function insertMedicinePatient($post) {
+        try {
+            $sql = `insert into $this->table ('fecha', 'medico_id', 'medicamento_id', 'paciente_id') values (?, ?, ?, ?)`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $post['fecha']);
+            $sentencia->bindParam(2, $post['medico_id']);
+            $sentencia->bindParam(3, $post['medicamento_id']);
+            $sentencia->bindParam(4, $post['paciente_id']);
+            $insert = $sentencia->execute();
+            
+            return 'Medicamento creado';
+        } catch (PDOException $e) {
+            return "ERROR AL INSERTAR.<br>" . $e->getMessage();
+        }
+    }
 }
