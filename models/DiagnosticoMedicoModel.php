@@ -34,5 +34,26 @@ class DiagnosticoMedicoModel extends Basedatos {
             return 'Error al devolver el diagnostico.<br>'. $e->getMessage();
         }
     }
+    
+    /**
+     * New diagnosis for a patient
+     * @param type $post
+     * @return string
+     */
+    public function insertDiagnosis($post) {
+        try {
+            $sql = `insert into $this->table ('fecha', 'medico_id', 'diagnostico_id', 'paciente_id') values (?, ?, ?, ?)`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $post['fecha']);
+            $sentencia->bindParam(2, $post['medico_id']);
+            $sentencia->bindParam(3, $post['diagnostico_id']);
+            $sentencia->bindParam(4, $post['paciente_id']);
+            $insert = $sentencia->execute();
+            
+            return 'Diagnostico creado';
+        } catch (PDOException $e) {
+            return "ERROR AL INSERTAR.<br>" . $e->getMessage();
+        }
+    }
 }
 
