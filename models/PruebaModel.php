@@ -32,5 +32,25 @@ class PruebaModel extends Basedatos {
             return 'Error al devolver la prueba.<br>'. $e->getMessage();
         }
     }
+    
+    /**
+     * New medical test in table pruebas
+     * @param type $post
+     * @return string
+     */
+    public function insertMedicalTest($post) {
+        try{
+            $sql = `insert into $this->table ('nombre') values (?)`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $post['nombre']);
+            $insert = $sentencia->execute();
+            
+            $mensaje = "";
+            $mensaje = "Se ha insertardo correctamente";
+            return $mensaje;
+        } catch (PDOException $e) {
+            return 'Error el insertar.<br>'. $e->getMessage();
+        }
+    }
 }
 
