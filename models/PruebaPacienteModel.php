@@ -30,4 +30,29 @@ class PruebaPacienteModel extends Basedatos {
             return "ERROR AL INSERTAR.<br>" . $e->getMessage();
         }
     }
+    
+    /**
+     * Get medical test for a patient
+     * @param type $medico
+     * @param type $paciente
+     * @return string
+     */
+    public function getMedicalTest($medico, $paciente) {
+        try {
+            $sql = `SELECT pp.fecha, p.DNI, p.nombre, p.apellidos, pr.nombre FROM $this->table pp JOIN medicos m on(pp.medico_id = m.id) JOIN pacientes p on(pp.paciente_id = p.id) JOIN pruebas pr on (pp.prueba_id = pr.id) WHERE pp.medico_id = ? and pp.paciente_id = ?`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $medico);
+            $sentencia->bindParam(2, $paciente);
+            $sentencia->execute();
+            $medicaltest = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($medicaltest) {
+                return $medicaltest;
+            }
+            
+            return 'No se encuentra ningún diagnostico';
+        } catch (PDOException $e) {
+            return "ERROR AL DEVOLVER LA PRUEBA.<br>" . $e->getMessage();
+        }
+    }
 }
