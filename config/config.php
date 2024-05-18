@@ -2,6 +2,6 @@
 
 $usuario = 'root';
 $pwd = '';
-$dbname ='hospital';
+$dbname ='ospedale';
 $host = 'localhost';
 
