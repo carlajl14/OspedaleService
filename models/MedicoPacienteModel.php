@@ -1,7 +1,5 @@
 <?php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . "/OspedaleService/objects/PacienteObject.php";
-
 class MedicoPacienteModel extends Basedatos {
     
     private $table;
@@ -27,9 +25,6 @@ class MedicoPacienteModel extends Basedatos {
             
             //Check to see if any patient returns
             if ($patients) {
-                foreach ($patients as $patient) {
-                    $paciente = new Paciente($patient['id'], $patient['DNI'], $patient['nombre'], $patient['apellidos'], $patient['direccion'], $patient['telefono'], $patient['email'], $patient['password']);
-                }
                 return $patients;
             }
         } catch (PDOException $e) {

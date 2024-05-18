@@ -32,4 +32,32 @@ class MedicoModel extends Basedatos {
             return 'Error al devolver las citas.<br>'. $e->getMessage();
         }
     }
+    
+    /**
+     * New Doctor
+     * @param type $post
+     * @return string
+     */
+    public function RecordDoctor($post) {
+        try {
+            $sql = `insert into $this->table ('DNI', 'nombre', 'apellidos', 'direccion', 'telefono', 'email', 'password', 'especialidad_id') values (?, ?, ?, ?, ?, ?, ?, ?)`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $post['DNI']);
+            $sentencia->bindParam(2, $post['nombre']);
+            $sentencia->bindParam(3, $post['apellidos']);
+            $sentencia->bindParam(4, $post['direccion']);
+            $sentencia->bindParam(5, $post['telefono']);
+            $sentencia->bindParam(6, $post['email']);
+            $sentencia->bindParam(7, $post['password']);
+            $sentencia->bindParam(8, $post['especialidad_id']);
+            $insert = $sentencia->execute();
+            
+            $mensaje = "";
+            $mensaje = "Se ha registrado correctamente";
+            return $mensaje;
+            
+        } catch (PDOException $e) {
+            return 'Error al registrarse.<br>'. $e->getMessage();
+        }
+    }
 }
