@@ -84,4 +84,31 @@ class MedicoPacienteModel extends Basedatos {
             return 'Error al insertar la cita.<br>'. $e->getMessage();
         }
     }
+    
+    /**
+     * Delete appointment
+     * @param type $fecha
+     * @param type $hora
+     * @return string
+     */
+    public function deleteAppointment($fecha, $hora) {
+        try {
+            $sql = `delete from $this->table where fecha = ?, hora = ?`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $fecha);
+            $sentencia->bindParam(2, $hora);
+            $delete = $sentencia->execute();
+            
+            $mensaje = "";
+            if ($sentencia->rowCount() == 0) {
+                $mensaje = "No se localiza la cita.";
+                return $mensaje;
+            } else {
+                $mensaje = "Cita borrada correctamente.";
+                return $mensaje;
+            }
+        } catch (PDOException $e) {
+            return 'Error al borrar.<br>' . $e->getMessage();
+        }
+    }
 }

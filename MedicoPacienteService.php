@@ -30,5 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
+// Borrar DELETE
+if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    $fecha = $_GET['fecha'];
+    $hora = $_GET['hora'];
+    $res = $medicoPaciente->deleteAppointment($fecha, $hora);
+    $resul['resultado'] = $res;
+    echo json_encode($resul);
+    exit();
+}
+
 // En caso de que ninguna de las opciones anteriores se haya ejecutado
 header("HTTP/1.1 400 Bad Request");
