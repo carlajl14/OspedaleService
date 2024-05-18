@@ -28,5 +28,25 @@ class DiagnosticoModel extends Basedatos {
             return 'Error el insertar.<br>'. $e->getMessage();
         }
     }
+    
+    /**
+     * Get all diagnosis
+     * @return string
+     */
+    public function getDiagnosis() {
+        try {
+            $sql = `select * from $this->table`;
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->execute();
+            $diagnosis = $sentencia->fecthAll(PDO::FETCH_ASSOC);
+            
+            if ($diagnosis) {
+                return $diagnosis;
+            }
+            return 'Error al devolver los diagnosticos';
+        } catch (PDOException $e) {
+            return 'Error al devolver los diagnosticos.<br>' . $e->getMessage();
+        }
+    }
 }
 
