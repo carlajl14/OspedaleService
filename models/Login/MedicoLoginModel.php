@@ -26,6 +26,9 @@ class MedicoLoginModel extends Basedatos {
             $medico = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             
             if ($medico) {
+                foreach ($medico as $doctor) {
+                    $_SESSION['user'] = $doctor['nombre'];
+                }
                 return $medico;
             }
             
@@ -35,4 +38,3 @@ class MedicoLoginModel extends Basedatos {
         }
     }
 }
-
