@@ -16,7 +16,7 @@ class PacienteLoginModel extends Basedatos {
      * @param type $password
      * @return string
      */
-    public function getMedico($email, $password) {
+    public function getPaciente($email, $password) {
         try {
             $sql = `select * from $this->table where email = ? and password = sha2(?, 256)`;
             $sentencia = $this->conexion->prepare($sql);
