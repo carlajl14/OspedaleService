@@ -18,20 +18,16 @@ class MedicoLoginModel extends Basedatos {
      */
     public function getMedico($email, $password) {
         try {
-            $sql = `select * from $this->table where email = ? and password = sha2(?, 256)`;
+            $sql = 'select * from medicos where email = ? and password = sha2(?, 256)';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $email);
             $sentencia->bindParam(2, $password);
             $sentencia->execute();
-            $medico = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            $medico = $sentencia->fetch(PDO::FETCH_ASSOC);
             
             if ($medico) {
-                foreach ($medico as $doctor) {
-                    $_SESSION['user'] = $doctor['nombre'];
-                }
                 return $medico;
             }
-            
             return 'Usuario o contraseña incorrectos';
         } catch (PDOException $e) {
             return 'Error al devolver los datos.<br>' . $e->getMessage();

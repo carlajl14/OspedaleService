@@ -1,7 +1,7 @@
 <?php
 
-require_once ('./db/db.php');
-require_once ('./models/Paciente/PacienteModel.php');
+require_once ('../db/db.php');
+require_once ('../models/Paciente/PacienteModel.php');
 
 $paciente = new PacienteModel();
 @header("Content-type: application/json");
@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode($res);
         exit();
     } else {
-        //$res = $medicoPaciente->allPacientes();
-        //echo json_encode($res);
         exit();
     }
 }

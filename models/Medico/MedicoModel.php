@@ -16,7 +16,7 @@ class MedicoModel extends Basedatos {
      */
     public function getDoctorappointment($id) {
         try {
-            $sql = `select * from medico_atiende_paciente where medico_id = ?`;
+            $sql = 'select * from medico_atiende_paciente where medico_id = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $id);
             $sentencia->execute();

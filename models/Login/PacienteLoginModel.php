@@ -18,17 +18,14 @@ class PacienteLoginModel extends Basedatos {
      */
     public function getPaciente($email, $password) {
         try {
-            $sql = `select * from $this->table where email = ? and password = sha2(?, 256)`;
+            $sql = 'select * from pacientes where email = ? and password = sha2(?, 256)';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $email);
             $sentencia->bindParam(2, $password);
             $sentencia->execute();
-            $paciente = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            $paciente = $sentencia->fetch(PDO::FETCH_ASSOC);
             
             if ($paciente) {
-                foreach ($paciente as $patient) {
-                    $_SESSION['user'] = $patient['nombre'];
-                }
                 return $paciente;
             }
             
