@@ -11,6 +11,25 @@ class MedicoModel extends Basedatos {
     }
     
     /**
+     * Return all doctors
+     * @return type
+     */
+    public function getAllDoctors() {
+        try {
+            $sql = 'select m.id, m.nombre as "medico", e.nombre as "especialidad" from medicos m join especialidades on (m.especialidad_id = e.id)';
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->execute();
+            $doctors = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($doctors) {
+                return $doctors;
+            }
+        } catch (PDOException $e) {
+            return 'Error al devolver los médicos.<br>'. $e->getMessage();
+        }
+    }
+    
+    /**
      * Get appointments from each doctor
      * @param type $id
      */

@@ -16,12 +16,11 @@ class MedicamentoPacienteModel extends Basedatos {
      * @param type $paciente
      * @return string
      */
-    public function getMedicinePatient($medico, $paciente) {
+    public function getMedicinePatient($paciente) {
         try {
-            $sql = 'SELECT mm.fecha, me.nombre, p.DNI, p.nombre, p.apellidos FROM `medico_medicamento_paciente` mm join medicos m on(mm.medico_id = m.id) JOIN pacientes p on(mm.paciente_id = p.id) JOIN medicamentos me on(mm.medicamento_id = me.id) WHERE mm.medico_id = ? and mm.paciente_id = ?';
+            $sql = 'SELECT mm.fecha, me.nombre, m.nombre as "nombre_medico", m.apellidos, e.nombre as "especialidad" FROM `medico_medicamento_paciente` mm join medicos m on(mm.medico_id = m.id) JOIN especialidades e on (m.especialidad_id = e.id) JOIN pacientes p on(mm.paciente_id = p.id) JOIN medicamentos me on(mm.medicamento_id = me.id) WHERE mm.paciente_id = ?';
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $medico);
-            $sentencia->bindParam(2, $paciente);
+            $sentencia->bindParam(1, $paciente);
             $sentencia->execute();
             $medicine = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             
@@ -42,7 +41,7 @@ class MedicamentoPacienteModel extends Basedatos {
      */
     public function insertMedicinePatient($post) {
         try {
-            $sql = `insert into $this->table ('fecha', 'medico_id', 'medicamento_id', 'paciente_id') values (?, ?, ?, ?)`;
+            $sql = "insert into medico_medicamento_paciente ('fecha', 'medico_id', 'medicamento_id', 'paciente_id') values (?, ?, ?, ?)";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['fecha']);
             $sentencia->bindParam(2, $post['medico_id']);

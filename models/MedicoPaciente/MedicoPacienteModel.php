@@ -17,7 +17,7 @@ class MedicoPacienteModel extends Basedatos {
      */
     public function allPacientes($id) {
         try {
-            $sql = `SELECT p.id, p.DNI, p.nombre, p.apellidos, p.direccion, p.telefono, p.email, p.password FROM pacientes p JOIN $this->table mp on (p.id = mp.paciente_id) join medicos m on (mp.medico_id = m.id) WHERE m.id = ?`;
+            $sql = 'SELECT p.id, p.DNI, p.nombre, p.apellidos, p.direccion, p.telefono, p.email, p.password FROM pacientes p JOIN medico_atiende_paciente mp on (p.id = mp.paciente_id) join medicos m on (mp.medico_id = m.id) WHERE m.id = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $id);
             $sentencia->execute();
@@ -39,7 +39,7 @@ class MedicoPacienteModel extends Basedatos {
      */
     public function checkDateTime($date, $time) {
         try {
-            $sql = `select count(*) from $this->table where fecha = ? and hora = ?`;
+            $sql = 'select count(*) from medico_atiende_paciente where fecha = ? and hora = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $date);
             $sentencia->bindParam(2, $time);
@@ -68,12 +68,14 @@ class MedicoPacienteModel extends Basedatos {
             $checkdatetime = $this->checkDateTime($post['fecha'], $post['hora']);
             
             if ($checkdatetime == false) {
-                $sql = `insert into $this->table ('fecha', 'hora', 'medico_id', 'paciente_id') values (?, ?, ?, ?)`;
+                $sql = 'insert into medico_atiende_paciente ("fecha", "hora", "medico_id", "paciente_id", "start", "end") values (?, ?, ?, ?, ?, ?)';
                 $sentencia = $this->conexion->prepare($sql);
                 $sentencia->bindParam(1, $post['fecha']);
                 $sentencia->bindParam(2, $post['hora']);
                 $sentencia->bindParam(3, $post['medico_id']);
                 $sentencia->bindParam(4, $post['paciente_id']);
+                $sentencia->bindParam(5, $post['fecha']. " " . $post['hora']. ":00");
+                $sentencia->bindParam(6, $post['fecha']. " " . $post['hora']. ":00");
                 $insert = $sentencia->execute();
                 
                 $mensaje = "";
@@ -91,12 +93,11 @@ class MedicoPacienteModel extends Basedatos {
      * @param type $hora
      * @return string
      */
-    public function deleteAppointment($fecha, $hora) {
+    public function deleteAppointment($id) {
         try {
-            $sql = `delete from $this->table where fecha = ?, hora = ?`;
+            $sql = 'delete from medico_atiende_paciente where id = ?';
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $fecha);
-            $sentencia->bindParam(2, $hora);
+            $sentencia->bindParam(1, $id);
             $delete = $sentencia->execute();
             
             $mensaje = "";
