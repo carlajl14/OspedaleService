@@ -17,9 +17,30 @@ class MedicamentoModel extends Basedatos {
      */
     public function getMedicine($nombre) {
         try {
-            $sql = `select * from $this->table where nombre = ?`;
+            $sql = 'select * from medicamentos where nombre = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $nombre);
+            $sentencia->execute();
+            $medicine = $sentencia->fetch(PDO::FETCH_ASSOC);
+            
+            if ($medicine) {
+                return $medicine;
+            }
+            
+            return 'No se encuentra ningún medicamento';
+        } catch (PDOException $e) {
+            return 'Error al devolver el medicamento.<br>'. $e->getMessage();
+        }
+    }
+    
+    /**
+     * Get all medicine
+     * @return string
+     */
+    public function getAllMedicine() {
+        try {
+            $sql = 'select * from medicamentos';
+            $sentencia = $this->conexion->prepare($sql);
             $sentencia->execute();
             $medicine = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             
@@ -40,7 +61,7 @@ class MedicamentoModel extends Basedatos {
      */
     public function insertMedicine($post) {
         try{
-            $sql = `insert into $this->table ('nombre') values (?)`;
+            $sql = 'insert into medicamentos (nombre) values (?)';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['nombre']);
             $insert = $sentencia->execute();

@@ -1,30 +1,30 @@
 <?php
 
 require_once ('../db/db.php');
-require_once ('../models/Paciente/PacienteModel.php');
+require_once ('../models/Especialidades/EspecialidadModel.php');
 
-$paciente = new PacienteModel();
+$especialidad = new EspecialidadModel();
 @header("Content-type: application/json");
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['id'])) {
-        $res = $paciente->getPatientAppointment($_GET['id']);
+    if (isset($_GET['espe'])) {
+        $res = $especialidad->getOneEspecialidad($_GET['espe']);
         echo json_encode($res);
         exit();
     } else {
-        $res = $paciente->getAllPatients();
+        $res = $especialidad->getEspecialidades();
         echo json_encode($res);
         exit();
     }
 }
 
 // Crear un nuevo reg POST
-// Los campos del array que venga se deberán llamar como los campos de la tabla pacientes
+// Los campos del array que venga se deberán llamar como los campos de la tabla medicos
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // se cargan toda la entrada que venga en php://input
     $post = json_decode(file_get_contents('php://input'), true);
-    $res = $paciente->RecordPatient($post);
+    $res = $especialidad->newEspecialidad($post);
     $resul['resultado'] = $res;
     echo json_encode($resul);
     exit();

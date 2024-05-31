@@ -18,7 +18,7 @@ class DiagnosticoMedicoModel extends Basedatos {
      */
     public function getDiagnosisPatient($paciente, $medico) {
         try {
-            $sql = 'SELECT md.fecha, d.descripcion, p.DNI, p.nombre, p.apellidos FROM `medico_diagnostico_paciente` md join medicos m on(md.medico_id = m.id) JOIN pacientes p on(md.paciente_id = p.id) JOIN diagnosticos d on(md.diagnostico_id = d.id) WHERE paciente_id = ? and medico_id = ?';
+            $sql = 'SELECT md.fecha, d.descripcion, p.id, p.DNI, p.nombre, p.apellidos FROM `medico_diagnostico_paciente` md join medicos m on(md.medico_id = m.id) JOIN pacientes p on(md.paciente_id = p.id) JOIN diagnosticos d on(md.diagnostico_id = d.id) WHERE paciente_id = ? and medico_id = ? ORDER BY md.fecha DESC LIMIT 1';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $paciente);
             $sentencia->bindParam(2, $medico);
@@ -42,7 +42,7 @@ class DiagnosticoMedicoModel extends Basedatos {
      */
     public function insertDiagnosis($post) {
         try {
-            $sql = `insert into $this->table ('fecha', 'medico_id', 'diagnostico_id', 'paciente_id') values (?, ?, ?, ?)`;
+            $sql = 'insert into medico_diagnostico_paciente (fecha, medico_id, diagnostico_id, paciente_id) values (?, ?, ?, ?)';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['fecha']);
             $sentencia->bindParam(2, $post['medico_id']);
@@ -56,4 +56,3 @@ class DiagnosticoMedicoModel extends Basedatos {
         }
     }
 }
-

@@ -13,6 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode($res);
         exit();
     } else {
+        $res = $medicamento->getAllMedicine();
+        echo json_encode($res);
         exit();
     }
 }

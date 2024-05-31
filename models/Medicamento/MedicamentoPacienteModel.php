@@ -41,7 +41,7 @@ class MedicamentoPacienteModel extends Basedatos {
      */
     public function insertMedicinePatient($post) {
         try {
-            $sql = "insert into medico_medicamento_paciente ('fecha', 'medico_id', 'medicamento_id', 'paciente_id') values (?, ?, ?, ?)";
+            $sql = "insert into medico_medicamento_paciente (fecha, medico_id, medicamento_id, paciente_id) values (?, ?, ?, ?)";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['fecha']);
             $sentencia->bindParam(2, $post['medico_id']);

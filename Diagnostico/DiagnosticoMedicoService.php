@@ -8,13 +8,11 @@ $diagnosticomedico = new DiagnosticoMedicoModel();
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['medico']) && isset($_GET['paciente'])) {
+    if (isset($_GET['paciente']) && isset($_GET['medico'])) {
         $res = $diagnosticomedico->getDiagnosisPatient($_GET['paciente'], $_GET['medico']);
         echo json_encode($res);
         exit();
     } else {
-        //$res = $pasaje->getPasajes();
-        //echo json_encode($res);
         exit();
     }
 }

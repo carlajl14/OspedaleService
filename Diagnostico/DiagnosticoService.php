@@ -8,7 +8,9 @@ $diagnostico = new DiagnosticoModel();
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['id'])) {
+    if (isset($_GET['descripcion'])) {
+        $res = $diagnostico->getOneDiagnosis($_GET['descripcion']);
+        echo json_encode($res);
         exit();
     } else {
         $res = $diagnostico->getDiagnosis();
@@ -22,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // se cargan toda la entrada que venga en php://input
     $post = json_decode(file_get_contents('php://input'), true);
-    $nombre = $post['descripcion'];
-    $res = $diagnostico->insertDiagnosis($nombre);
+    $res = $diagnostico->insertDiagnosis($post);
     $resul['resultado'] = $res;
     echo json_encode($resul);
     exit();

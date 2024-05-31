@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . ('/../db/db.php');
+require_once ('../db/db.php');
 require_once ('../models/MedicoPaciente/MedicoPacienteModel.php');
 
 $medicoPaciente = new MedicoPacienteModel();
@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         echo json_encode($res);
         exit();
     } else {
-        //$res = $medicoPaciente->allPacientes();
-        //echo json_encode($res);
         exit();
     }
 }
@@ -29,16 +27,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo json_encode($resul);
     exit();
 }
-
-// Borrar DELETE
-if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    $fecha = $_GET['fecha'];
-    $hora = $_GET['hora'];
-    $res = $medicoPaciente->deleteAppointment($fecha, $hora);
-    $resul['resultado'] = $res;
-    echo json_encode($resul);
-    exit();
-}
-
 // En caso de que ninguna de las opciones anteriores se haya ejecutado
 header("HTTP/1.1 400 Bad Request");

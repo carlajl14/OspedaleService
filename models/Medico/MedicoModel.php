@@ -16,7 +16,7 @@ class MedicoModel extends Basedatos {
      */
     public function getAllDoctors() {
         try {
-            $sql = 'select m.id, m.nombre as "medico", e.nombre as "especialidad" from medicos m join especialidades on (m.especialidad_id = e.id)';
+            $sql = 'select m.id, m.nombre as "medico", e.nombre as "especialidad" from medicos m join especialidades e on (m.especialidad_id = e.id)';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->execute();
             $doctors = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -35,7 +35,7 @@ class MedicoModel extends Basedatos {
      */
     public function getDoctorappointment($id) {
         try {
-            $sql = 'select * from medico_atiende_paciente where medico_id = ?';
+            $sql = 'select mp.fecha, mp.hora, p.id, p.nombre, p.apellidos from medico_atiende_paciente mp join pacientes p on (mp.paciente_id = p.id) where medico_id = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $id);
             $sentencia->execute();
@@ -59,7 +59,7 @@ class MedicoModel extends Basedatos {
      */
     public function RecordDoctor($post) {
         try {
-            $sql = `insert into $this->table ('DNI', 'nombre', 'apellidos', 'direccion', 'telefono', 'email', 'password', 'especialidad_id') values (?, ?, ?, ?, ?, ?, ?, ?)`;
+            $sql = "insert into medicos (DNI, nombre, apellidos, direccion, telefono, email, password, especialidad_id) values (?, ?, ?, ?, ?, ?, sha2(?, 256), ?)";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['DNI']);
             $sentencia->bindParam(2, $post['nombre']);

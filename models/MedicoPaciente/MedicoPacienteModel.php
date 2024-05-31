@@ -39,7 +39,7 @@ class MedicoPacienteModel extends Basedatos {
      */
     public function checkDateTime($date, $time) {
         try {
-            $sql = 'select count(*) from medico_atiende_paciente where fecha = ? and hora = ?';
+            $sql = 'select COUNT(*) from medico_atiende_paciente where fecha = ? and hora = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $date);
             $sentencia->bindParam(2, $time);
@@ -68,19 +68,15 @@ class MedicoPacienteModel extends Basedatos {
             $checkdatetime = $this->checkDateTime($post['fecha'], $post['hora']);
             
             if ($checkdatetime == false) {
-                $sql = 'insert into medico_atiende_paciente ("fecha", "hora", "medico_id", "paciente_id", "start", "end") values (?, ?, ?, ?, ?, ?)';
+                $sql = 'insert into medico_atiende_paciente (fecha, hora, medico_id, paciente_id) values (?, ?, ?, ?)';
                 $sentencia = $this->conexion->prepare($sql);
                 $sentencia->bindParam(1, $post['fecha']);
                 $sentencia->bindParam(2, $post['hora']);
                 $sentencia->bindParam(3, $post['medico_id']);
                 $sentencia->bindParam(4, $post['paciente_id']);
-                $sentencia->bindParam(5, $post['fecha']. " " . $post['hora']. ":00");
-                $sentencia->bindParam(6, $post['fecha']. " " . $post['hora']. ":00");
                 $insert = $sentencia->execute();
                 
-                $mensaje = "";
-                $mensaje = 'Cita insertada correctamente';
-                return $mensaje;
+                return 'Cita insertada correctamente';
             }
         } catch (PDOException $e) {
             return 'Error al insertar la cita.<br>'. $e->getMessage();

@@ -11,6 +11,27 @@ class PacienteModel extends Basedatos {
     }
     
     /**
+     * Get all patients
+     * @return string
+     */
+    public function getAllPatients() {
+        try {
+            $sql = 'select * from pacientes';
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->execute();
+            $patients = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($patients) {
+                return $patients;
+            }
+            
+            return 'No hay pacientes';
+        } catch (PDOException $e) {
+            return 'Error al devolver los pacientes.<br>'. $e->getMessage();
+        }
+    }
+    
+    /**
      * Get appointments from each patient
      * @param type $id
      */
@@ -40,7 +61,7 @@ class PacienteModel extends Basedatos {
      */
     public function RecordPatient($post) {
         try {
-            $sql = `insert into $this->table ('DNI', 'nombre', 'apellidos', 'direccion', 'telefono', 'email', 'password') values (?, ?, ?, ?, ?, ?, ?)`;
+            $sql = 'insert into pacientes (DNI, nombre, apellidos, direccion, telefono, email, password) values (?, ?, ?, ?, ?, ?, sha2(?, 256))';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['DNI']);
             $sentencia->bindParam(2, $post['nombre']);
@@ -50,10 +71,8 @@ class PacienteModel extends Basedatos {
             $sentencia->bindParam(6, $post['email']);
             $sentencia->bindParam(7, $post['password']);
             $insert = $sentencia->execute();
-            
-            $mensaje = "";
-            $mensaje = "Se ha registrado correctamente";
-            return $mensaje;
+
+            return "Se ha registrado correctamente";
             
         } catch (PDOException $e) {
             return 'Error al registrarse.<br>'. $e->getMessage();

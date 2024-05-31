@@ -17,7 +17,7 @@ class PruebaModel extends Basedatos {
      */
     public function getMedicalTest($nombre) {
         try {
-            $sql = `select * from $this->table where nombre = ?`;
+            $sql = "select * from pruebas where nombre = ?";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $nombre);
             $sentencia->execute();
@@ -40,14 +40,12 @@ class PruebaModel extends Basedatos {
      */
     public function insertMedicalTest($post) {
         try{
-            $sql = `insert into $this->table ('nombre') values (?)`;
+            $sql = "insert into pruebas (nombre) values (?)";
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['nombre']);
             $insert = $sentencia->execute();
-            
-            $mensaje = "";
-            $mensaje = "Se ha insertardo correctamente";
-            return $mensaje;
+
+            return "Se ha insertardo correctamente";
         } catch (PDOException $e) {
             return 'Error el insertar.<br>'. $e->getMessage();
         }

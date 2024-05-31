@@ -8,13 +8,11 @@ $pruebapaciente = new PruebaPacienteModel();
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['medico']) && isset($_GET['paciente'])) {
-        $res = $pruebapaciente->getMedicalTest($_GET['medico'], $_GET['paciente']);
+    if (isset($_GET['id'])) {
+        $res = $pruebapaciente->getMedicalTest($_GET['id']);
         echo json_encode($res);
         exit();
     } else {
-        //$res = $pasaje->getPasajes();
-        //echo json_encode($res);
         exit();
     }
 }
