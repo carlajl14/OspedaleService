@@ -11,6 +11,27 @@ class PruebaModel extends Basedatos {
     }
     
     /**
+     * Get all medical tests
+     * @return string
+     */
+    public function getPruebas() {
+        try {
+            $sql = "select * from pruebas";
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->execute();
+            $tests = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($tests) {
+                return $tests;
+            }
+            
+            return 'No se encuentra ninguna prueba';
+        } catch (PDOException $e) {
+            return 'Error al devolver las pruebas.<br>'. $e->getMessage();
+        }
+    }
+    
+    /**
      * Get a medical test by name
      * @param type $nombre
      * @return string
@@ -21,7 +42,7 @@ class PruebaModel extends Basedatos {
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $nombre);
             $sentencia->execute();
-            $medicaltest = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            $medicaltest = $sentencia->fetch(PDO::FETCH_ASSOC);
             
             if ($medicaltest) {
                 return $medicaltest;

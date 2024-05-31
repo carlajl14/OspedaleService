@@ -11,12 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/OspedaleService/models/Diagnostico/DiagnosticoModel.php</file>
-            <file>file:/C:/xampp/htdocs/OspedaleService/models/Diagnostico/DiagnosticoMedicoModel.php</file>
-            <file>file:/C:/xampp/htdocs/OspedaleService/Diagnostico/DiagnosticoService.php</file>
-            <file>file:/C:/xampp/htdocs/OspedaleService/models/MedicoPaciente/MedicoPacienteModel.php</file>
-            <file>file:/C:/xampp/htdocs/OspedaleService/MedicoPaciente/MedicoPacienteService.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
