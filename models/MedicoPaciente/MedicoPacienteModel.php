@@ -85,24 +85,20 @@ class MedicoPacienteModel extends Basedatos {
     
     /**
      * Delete appointment
-     * @param type $fecha
-     * @param type $hora
+     * @param type $id
      * @return string
      */
     public function deleteAppointment($id) {
         try {
-            $sql = 'delete from medico_atiende_paciente where id = ?';
+            $sql = 'delete from medico_atiende_paciente where paciente_id = ?';
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $id);
             $delete = $sentencia->execute();
             
-            $mensaje = "";
             if ($sentencia->rowCount() == 0) {
-                $mensaje = "No se localiza la cita.";
-                return $mensaje;
+                return "No se localiza la cita";
             } else {
-                $mensaje = "Cita borrada correctamente.";
-                return $mensaje;
+                return "Cita borrada correctamente";
             }
         } catch (PDOException $e) {
             return 'Error al borrar.<br>' . $e->getMessage();
