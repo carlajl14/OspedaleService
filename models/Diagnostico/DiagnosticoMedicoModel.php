@@ -11,6 +11,29 @@ class DiagnosticoMedicoModel extends Basedatos {
     }
     
     /**
+     * Get all diagnosis for patient
+     * @param type $paciente
+     * @return string
+     */
+    public function getAllDiagnosis($paciente) {
+        try {
+            $sql = 'SELECT md.fecha, d.descripcion, p.id, m.nombre, m.apellidos FROM `medico_diagnostico_paciente` md join medicos m on(md.medico_id = m.id) JOIN pacientes p on(md.paciente_id = p.id) JOIN diagnosticos d on(md.diagnostico_id = d.id) WHERE paciente_id = ?';
+            $sentencia = $this->conexion->prepare($sql);
+            $sentencia->bindParam(1, $paciente);
+            $sentencia->execute();
+            $diagnosis = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($diagnosis) {
+                return $diagnosis;
+            }
+            
+            return 'No se encuentra ningún diagnostico';
+        } catch (PDOException $e) {
+            return 'Error al devolver el diagnostico.<br>'. $e->getMessage();
+        }
+    }
+    
+    /**
      * Get a diagnosis of a patient
      * @param type $paciente
      * @param type $medico

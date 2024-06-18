@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $res = $diagnosticomedico->getDiagnosisPatient($_GET['paciente'], $_GET['medico']);
         echo json_encode($res);
         exit();
-    } else {
+    } else if (isset($_GET['id'])) {
+        $res = $diagnosticomedico->getAllDiagnosis($_GET['id']);
+        echo json_encode($res);
         exit();
     }
 }
