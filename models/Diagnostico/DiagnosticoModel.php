@@ -20,10 +20,8 @@ class DiagnosticoModel extends Basedatos {
             $sentencia = $this->conexion->prepare($sql);
             $sentencia->bindParam(1, $post['descripcion']);
             $insert = $sentencia->execute();
-            
-            $mensaje = "";
-            $mensaje = "Se ha insertardo correctamente";
-            return $mensaje;
+            $diagnosisId = $this->conexion->lastInsertId();
+            return $diagnosisId;
         } catch (PDOException $e) {
             return 'Error el insertar.<br>'. $e->getMessage();
         }
@@ -54,11 +52,11 @@ class DiagnosticoModel extends Basedatos {
      * @param type $descripcion
      * @return string
      */
-    public function getOneDiagnosis($descripcion) {
+    public function getOneDiagnosis($id) {
         try {
-            $sql = 'select * from diagnosticos where descripcion = ?';
+            $sql = 'select * from diagnosticos where id = ?';
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $descripcion);
+            $sentencia->bindParam(1, $id);
             $sentencia->execute();
             $diagnosis = $sentencia->fetch(PDO::FETCH_ASSOC);
             

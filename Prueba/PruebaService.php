@@ -8,8 +8,8 @@ $prueba = new PruebaModel();
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['nombre'])) {
-        $res = $prueba->getMedicalTest($_GET['nombre']);
+    if (isset($_GET['id'])) {
+        $res = $prueba->getMedicalTest($_GET['id']);
         echo json_encode($res);
         exit();
     } else {

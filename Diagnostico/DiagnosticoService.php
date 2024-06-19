@@ -8,8 +8,8 @@ $diagnostico = new DiagnosticoModel();
 // Consultar GET
 // devuelve o 1 o todos, dependiendo si recibe o no parámetro
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (isset($_GET['descripcion'])) {
-        $res = $diagnostico->getOneDiagnosis($_GET['descripcion']);
+    if (isset($_GET['id'])) {
+        $res = $diagnostico->getOneDiagnosis($_GET['id']);
         echo json_encode($res);
         exit();
     } else {

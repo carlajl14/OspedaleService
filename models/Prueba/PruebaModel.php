@@ -36,11 +36,11 @@ class PruebaModel extends Basedatos {
      * @param type $nombre
      * @return string
      */
-    public function getMedicalTest($nombre) {
+    public function getMedicalTest($id) {
         try {
-            $sql = "select * from pruebas where nombre = ?";
+            $sql = "select * from pruebas where id = ?";
             $sentencia = $this->conexion->prepare($sql);
-            $sentencia->bindParam(1, $nombre);
+            $sentencia->bindParam(1, $id);
             $sentencia->execute();
             $medicaltest = $sentencia->fetch(PDO::FETCH_ASSOC);
             
@@ -66,7 +66,8 @@ class PruebaModel extends Basedatos {
             $sentencia->bindParam(1, $post['nombre']);
             $insert = $sentencia->execute();
 
-            return "Se ha insertardo correctamente";
+            $testId = $this->conexion->lastInsertId();
+            return $testId;
         } catch (PDOException $e) {
             return 'Error el insertar.<br>'. $e->getMessage();
         }
